@@ -37,11 +37,11 @@ app.use(errorHandler)
 
 
 
-app.listen(port, () => {
+j=app.listen(port, () => {
     console.log(`Server running on port: ${port}`);
 });
 
 process.on("unhandledRejection", (err, promise) => {
     console.log(`Logged Error: ${err.message}`);
-    app.close(() => process.exit(1));
+    j.close(() => process.exit(1));
   });

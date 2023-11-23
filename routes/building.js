@@ -5,7 +5,7 @@ const { protect } = require('../middleware/auth');
 const { getBuildingWithLeastOccupancy, getBuildingsByType, addNewBuilding } = require('../controllers/building');
 
 router.route('/getBuildingByType/:type').get(protect, getBuildingsByType);
-router.route('/getBuildingWithLeastOccupency/:type').get(protect, getBuildingWithLeastOccupancy);
-
+router.route('/getBuildingWithLeastOccupancy/:type').get(protect, getBuildingWithLeastOccupancy);
+router.route('/addBuilding').post(addNewBuilding);
 
 module.exports = router;

@@ -3,7 +3,7 @@ const Floor = require('../models/floor');
 const ErrorResponse = require('../utils/errorResponse');
 
 // Controller function to handle GET request for buildings based on type
-exports.getBuildingsByType = async (req, res) => {
+exports.getBuildingsByType = async (req, res, next) => {
   const { type } = req.params;
 
   try {
@@ -21,7 +21,7 @@ exports.getBuildingsByType = async (req, res) => {
 };
 
 // Controller function to handle GET request for the building with least occupancy for a specific type
-exports.getBuildingWithLeastOccupancy = async (req, res) => {
+exports.getBuildingWithLeastOccupancy = async (req, res, next) => {
   const { type } = req.params;
 
   try {
@@ -41,7 +41,7 @@ exports.getBuildingWithLeastOccupancy = async (req, res) => {
   }
 };
 
-exports.addNewBuilding = async (req, res) => {
+exports.addNewBuilding = async (req, res, next) => {
     const { name, type, floors } = req.body;
   
     try {
@@ -59,6 +59,7 @@ exports.addNewBuilding = async (req, res) => {
         const newFloor = new Floor({
           floorNumber: floor.floorNumber,
           occupancy: floor.occupancy || 0,
+          max: floor.max || 99,
           building: savedBuilding._id,
         });
   
