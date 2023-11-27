@@ -1,0 +1,53 @@
+.subheading {
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.heading {
+    font-size: 24px;
+    color: orange;
+}
+
+.progress {
+    height: 10px;
+    border-radius: 20px;
+}
+
+.floors {
+    padding-left: 16px;
+}
+
+.options {
+    font-size: 16px;
+    color: grey;
+    line-height: 24px;
+}
+
+.floor_name {
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.location_card {
+border-radius: 8px;
+}
+
+.map-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home_root {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    font-family: Lato, sans-serif;
+    background: url("../public/college_bgjpeg_blur.jpg") 0 / cover fixed;
+    z-index: 1;
+}
+
+.content {
+    z-index: 2;
+}
