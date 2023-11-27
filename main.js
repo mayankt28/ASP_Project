@@ -9,9 +9,15 @@ const connectDB = require("./config/db");
 connectDB();
 
 const express = require("express");
+const expressWs = require('express-ws');
 const app = express();
+expressWs(app);
 const cors = require('cors');
 const port = process.env.PORT || 3000;
+
+const sensorController = require('./controllers/sensor');
+
+
 
 //import routers
 const authRouter = require('./routes/auth');
