@@ -1,15 +1,30 @@
-const mqtt = require('mqtt');
+
 const Sensor = require('../models/sensor');
 const Floor = require('../models/floor');
+const mqtt = require('mqtt');
 
-const mqttBroker = 'broker.hivemq.com';
-const mqttPort = 8000;  // port for MQTT over WebSocket
-const mqttTopic = 'ADD_TOPIC_HERE';  // Same as the topic in the Python script
+const mqttTopic = "/ASPSensorData"
+const mqttClient = mqtt.connect('wss://broker.hivemq.com:8884/mqtt');
 
-// Create MQTT client
-const mqttClient = mqtt.connect(`ws://${mqttBroker}:${mqttPort}`);
+mqttClient.on('connect', () => {
+    console.log('Connected to HiveMQ broker');
+    mqttClient.subscribe(mqttTopic);
+  });
+  
+  mqttClient.on('error', (error) => {
+    console.error('MQTT connection error:', error);
+  });
+  
+  mqttClient.on('close', () => {
+    console.log('Disconnected from HiveMQ broker');
+  });
+
+
+
 
 // Handle MQTT messages
+
+
 mqttClient.on('message', async (topic, message) => {
     console.log(`Received message on topic ${topic}: ${message.toString()}`);
     try {
@@ -56,10 +71,14 @@ mqttClient.on('message', async (topic, message) => {
 
 });
 
-// Connect to MQTT broker
-mqttClient.on('connect', () => {
-  console.log('Connected to MQTT broker');
-  mqttClient.subscribe(mqttTopic);
+// Test Code Below
+
+/*
+
+mqttClient.on('message', async (topic, message) => {
+    console.log(`Received message on topic ${topic}: ${message.toString()}`);
 });
+
+*/
 
 module.exports = mqttClient;  // Export the MQTT client for use in other files
