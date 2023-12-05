@@ -116,4 +116,4 @@ exports.addSensorToFloor =  async (req, res, next) => {
 
 
 
-module.exports = mqttClient;  // Export the MQTT client for use in other files
+
