@@ -1,5 +1,6 @@
 
 const Sensor = require('../models/sensor');
+const mongoose = require('mongoose');
 const Floor = require('../models/floor');
 const Building = require('../models/building')
 const mqtt = require('mqtt');
@@ -89,8 +90,8 @@ exports.addSensorToFloor =  async (req, res, next) => {
     const { sensorId, floorId, buildingId } = req.body;
 
     // Check if the floor and building exist
-    const floorExists = await Floor.exists({ _id: floorId });
-    const buildingExists = await Building.exists({ _id: buildingId });
+    const floorExists = await Floor.exists({ _id: mongoose.Types.ObjectId(floorId) });
+    const buildingExists = await Building.exists({ _id: mongoose.Types.ObjectId(buildingId) });
 
     if (!floorExists || !buildingExists) {
       return res.status(400).json({ message: 'Invalid floor or building ID' });
@@ -105,7 +106,7 @@ exports.addSensorToFloor =  async (req, res, next) => {
     const sensor = new Sensor(newSensorData);
     await sensor.save();
 
-    await Floor.updateOne({ _id: floorId }, { $push: { sensors: sensor._id } });
+    await Floor.updateOne({ _id: mongoose.Types.ObjectId(floorId) }, { $push: { sensors: sensor._id } });
 
     res.status(201).json({ message: 'Sensor data added successfully', sensor });
   } 
