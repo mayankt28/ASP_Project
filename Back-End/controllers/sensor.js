@@ -1,6 +1,7 @@
 
 const Sensor = require('../models/sensor');
 const Floor = require('../models/floor');
+const Building = require('../models/building')
 const mqtt = require('mqtt');
 
 const mqttTopic = "/ASPSensorData"
