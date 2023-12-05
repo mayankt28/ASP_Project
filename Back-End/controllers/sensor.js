@@ -36,7 +36,7 @@ mqttClient.on('message', async (topic, message) => {
             sensor = await Sensor.findOne({ sensorId });
     
             if(sensor) {
-                var floor = Floor.findById(sensor.flooor);
+                var floor = await Floor.findById(sensor.floor);
     
                 if(floor) {
                     if(action == "ENTRY") {
@@ -80,5 +80,40 @@ mqttClient.on('message', async (topic, message) => {
 });
 
 */
+
+
+// Endpoint to add sensor data
+exports.addSensorToFloor =  async (req, res, next) => {
+  try {
+    const { sensorId, floorId, buildingId } = req.body;
+
+    // Check if the floor and building exist
+    const floorExists = await Floor.exists({ _id: floorId });
+    const buildingExists = await Building.exists({ _id: buildingId });
+
+    if (!floorExists || !buildingExists) {
+      return res.status(400).json({ message: 'Invalid floor or building ID' });
+    }
+
+    const newSensorData = {
+      sensorId,
+      floor: floorId,
+      building: buildingId,
+    };
+
+    const sensor = new Sensor(newSensorData);
+    await sensor.save();
+
+    await Floor.updateOne({ _id: floorId }, { $push: { sensors: sensor._id } });
+
+    res.status(201).json({ message: 'Sensor data added successfully', sensor });
+  } 
+  catch (error) {
+    next(error);
+  }
+}
+
+
+
 
 module.exports = mqttClient;  // Export the MQTT client for use in other files

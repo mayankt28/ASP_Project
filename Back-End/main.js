@@ -22,6 +22,7 @@ const sensorController = require('./controllers/sensor');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const buildingRouter = require('./routes/building');
+const sensorRouter = require('./routes/sensor');
 
 
 app.use(express.json());
@@ -36,6 +37,7 @@ app.get('/', (req,res) => {
 app.use('/api/auth', authRouter);
 app.use('/api/user/', userRouter);
 app.use('/api/building/', buildingRouter);
+app.use('/api/sensor/', sensorRouter);
 
 
 //middleware
